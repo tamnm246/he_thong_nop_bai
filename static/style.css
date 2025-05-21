@@ -1,0 +1,462 @@
+/* === GLOBAL STYLES - MODERN & CLEAN === */
+
+/* --- Resets & Base --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f6f9; /* Nền xám rất nhạt, sạch sẽ */
+    color: #343f56; /* Màu chữ chính */
+    line-height: 1.65;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.page-wrapper {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 1320px; /* Giới hạn chiều rộng nội dung */
+    margin: 0 auto; /* Căn giữa */
+    padding: 20px 15px 40px 15px; /* Padding trên/dưới nhiều hơn */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: #1a2b48; /* Màu tiêu đề đậm */
+    margin-bottom: 0.8em;
+    line-height: 1.3;
+}
+
+p {
+    margin-bottom: 1.1em;
+    color: #56657f; /* Màu chữ đoạn văn */
+}
+
+a {
+    color: #2563eb; /* Màu xanh dương hiện đại (Tailwind Blue 600) */
+    text-decoration: none;
+    transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+a:hover {
+    color: #1d4ed8; /* Tailwind Blue 700 */
+    opacity: 0.85;
+}
+
+/* --- Main Header (Cho các trang chung) --- */
+.main-header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 20px;
+}
+.header-logo {
+    max-width: 110px; /* Kích thước logo */
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.header-title { text-align: center; }
+.header-title h1 {
+    font-size: 2.5rem;
+    color: #0d172a; /* Màu rất đậm */
+    font-weight: 700;
+    margin-bottom: 0.25em;
+}
+.header-title h2 {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #1e3a5f;
+    margin-bottom: 0.2em;
+}
+.header-title h3 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #2563eb; /* Màu nhấn */
+}
+
+/* --- Content Container (cho trang có 2 cột form) --- */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* --- Card UI (Áp dụng chung) --- */
+.card-ui {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px 35px;
+    box-shadow: 0 7px 25px rgba(0, 20, 70, 0.07), 0 3px 8px rgba(0,20,70,0.04);
+    transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+    width: 100%;
+    border: 1px solid #e7eaf3; /* Viền rất nhạt */
+}
+.card-ui:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 20, 70, 0.09), 0 5px 12px rgba(0,20,70,0.05);
+}
+
+@media (min-width: 992px) {
+    .container .form-section.card-ui {
+        width: calc(50% - 15px);
+    }
+}
+
+.card-ui h2, .card-ui h3 { /* Tiêu đề bên trong card */
+    font-size: 1.4rem;
+    color: #1a2b48;
+    border-bottom: 1px solid #dfe4f0;
+    padding-bottom: 12px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+.card-ui h2 i, .card-ui h3 i {
+    margin-right: 10px;
+    color: #2563eb;
+    font-size: 1.05em;
+}
+
+/* --- Forms: Labels, Inputs, Selects --- */
+label {
+    display: block;
+    font-weight: 500;
+    color: #455468;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="file"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    border: 1px solid #cbd5e1; /* Tailwind Gray 300 */
+    border-radius: 8px;
+    background-color: #fff;
+    color: #2d3748; /* Tailwind Gray 700 */
+    font-size: 0.95rem;
+    font-weight: 400;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+input[type="text"]::placeholder, input[type="password"]::placeholder {
+    color: #a0aec0; /* Tailwind Gray 400 */
+}
+
+input[type="file"] { padding: 8px 10px; }
+input[type="file"]::file-selector-button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+input[type="file"]::file-selector-button:hover { background-color: #1d4ed8; }
+input[type="file"]::file-selector-button:active { transform: scale(0.97); }
+
+input[type="text"]:focus,
+input[type="file"]:focus,
+input[type="password"]:focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+select {
+    appearance: none; -webkit-appearance: none; -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" viewBox="0 0 20 20" fill="%232563EB"%3E%3Cpath fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 13px auto;
+    padding-right: 35px;
+}
+
+/* --- Buttons --- */
+.button, button, .button-green, .login-link-button, .logout-button, .export-excel-button, .delete-button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 9px 18px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: center; text-decoration: none;
+    vertical-align: middle; cursor: pointer; user-select: none;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.button i, button i, .button-green i, .login-link-button i, .logout-button i, .export-excel-button i, .delete-button i {
+    font-size: 0.95em;
+    margin-right: 3px;
+}
+
+/* Primary Button */
+button.button-primary-action, #form-nop-bai button {
+    color: #fff;
+    background-color: #2563eb;
+    border-color: #2563eb;
+    width: 100%;
+    font-weight: 600; /* Nút chính đậm hơn */
+    padding: 10px 18px; /* Nút chính to hơn chút */
+}
+button.button-primary-action:hover, #form-nop-bai button:hover {
+    background-color: #1d4ed8;
+    border-color: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(37,99,235,0.15);
+}
+
+/* Green Button */
+.button-green {
+    color: #fff;
+    background-color: #059669; /* Tailwind Emerald 600 */
+    border-color: #059669;
+    width: 100%;
+    font-weight: 600;
+    padding: 10px 18px;
+}
+.button-green:hover {
+    background-color: #047857; /* Tailwind Emerald 700 */
+    border-color: #065f46; /* Tailwind Emerald 800 */
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(5,150,105,0.15);
+}
+
+/* Teacher Login Link Button (Footer link trên trang index) */
+.login-link-container { margin: 30px auto; text-align: center; }
+.login-link-button {
+    color: #fff;
+    background-color: #374151; /* Tailwind Gray 700 */
+    font-size: 0.95rem; padding: 10px 20px;
+}
+.login-link-button:hover {
+    background-color: #1f2937; /* Tailwind Gray 800 */
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(55,65,81,0.15);
+}
+
+/* --- Flash Messages --- */
+.flash-messages, .flash-messages-admin { width:100%; max-width:900px; margin:20px auto; list-style:none; padding: 0 15px; /* Thêm padding nếu container cha không có */}
+.flash {
+    padding: 12px 18px; margin-bottom:15px; border-radius:8px; font-weight:500;
+    text-align:left; display:flex; align-items:center; gap:10px;
+    border: 1px solid; box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+}
+.flash i { font-size:1.1rem; margin-right:5px; }
+.flash.success { background-color:#f0fdf4; color:#14532d; border-color:#bbf7d0; }
+.flash.error, .flash.login_error { background-color:#fef2f2; color:#991b1b; border-color:#fecaca; }
+.flash.info    { background-color:#eff6ff; color:#1e40af; border-color:#bfdbfe; }
+.flash.warning { background-color:#fffbeb; color:#92400e; border-color:#fde68a; }
+
+
+/* === LOGIN PAGE - ULTRA SIMPLE STYLES (Đã tích hợp và điều chỉnh) === */
+.login-page-ultrasimple-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #eef2f7;
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.login-container-ultrasimple {
+    width: 100%;
+    max-width: 400px; /* Tăng nhẹ */
+    background-color: #ffffff;
+    padding: 35px 40px;
+    border-radius: 12px;
+    box-shadow: 0 7px 25px rgba(0, 20, 70, 0.07), 0 3px 8px rgba(0,20,70,0.04); /* Đồng bộ bóng đổ */
+    text-align: left;
+}
+
+.login-container-ultrasimple h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #1a2b48; /* Màu tiêu đề đậm */
+    margin-bottom: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.login-container-ultrasimple h3 i {
+    color: #2563eb;
+    font-size: 1.1em;
+}
+
+.flash-ultrasimple { /* Sử dụng lại style .flash chung */
+    /* Các style đã được định nghĩa ở .flash */
+}
+
+.input-group-ultrasimple { margin-bottom: 20px; }
+.input-group-ultrasimple label {
+    display: block; font-size: 0.875rem; color: #455468;
+    font-weight: 500; margin-bottom: 6px;
+}
+.input-group-ultrasimple input { /* Sử dụng lại style input chung */
+    padding: 10px 14px; /* Giữ padding riêng nếu cần */
+    font-size: 0.95rem;
+    border-radius: 8px;
+}
+
+.button-login-ultrasimple { /* Kế thừa từ .button và tùy chỉnh */
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    padding: 11px 15px; /* Điều chỉnh padding */
+    margin-top: 10px;
+}
+.button-login-ultrasimple:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(37,99,235,0.15);
+}
+
+.back-link-ultrasimple { margin-top: 25px; text-align: center; font-size: 0.875rem; }
+.back-link-ultrasimple a { color: #2563eb; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 6px;}
+.back-link-ultrasimple a:hover { background-color: rgba(37,99,235,0.08); color: #1d4ed8; text-decoration: none; }
+.login-page-ultrasimple-body .site-footer { display: none !important; }
+
+
+/* === ADMIN PAGE STYLES === */
+.admin-page-container.card-ui {
+    max-width: 95%; /* Cho trang admin rộng hơn */
+    margin: 30px auto;
+    padding: 0; /* Reset padding để header và table kiểm soát */
+    overflow: hidden;
+}
+.header.admin-header {
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+    background-color: #fff; /* Nền header trắng */
+    color: #1a2b48;
+    padding: 18px 25px;
+    border-bottom: 1px solid #e7eaf3;
+    border-radius: 12px 12px 0 0; /* Chỉ bo góc trên */
+    /* Bỏ margin âm vì card cha đã reset padding */
+}
+.header.admin-header h2 { color: #1a2b48; font-size: 1.5rem; margin-bottom:0; }
+@media (max-width: 768px) {
+    .header.admin-header { flex-direction: column; align-items: flex-start; }
+    .header.admin-header h2 { margin-bottom: 10px; font-size: 1.3rem;}
+    .admin-header-info { width: 100%; text-align: left; margin-top:10px;}
+    .welcome-message { margin-bottom: 10px; }
+    .logout-button { width: 100%; justify-content: center; }
+}
+
+.admin-controls {
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center;
+    margin-bottom:20px; gap:15px;
+    padding: 20px 25px 0 25px;
+}
+.admin-controls h3 { font-size:1.4rem; margin-bottom:0; color: #1a2b48; }
+.logout-button { color: #fff; background-color: #dc3545; border-color: #dc3545; }
+.logout-button:hover { background-color: #c82333; border-color: #bd2130; color:#fff; }
+.export-excel-button { color: #fff; background-color: #198754; border-color: #198754; }
+.export-excel-button:hover { background-color: #157347; border-color: #146c43; color:#fff;}
+
+/* --- Table Styling --- */
+.table-responsive-wrapper {
+    width:100%; overflow-x:auto;
+    padding: 0 25px 25px 25px; /* Padding cho bảng */
+}
+table {
+    width:100%; min-width:800px; border-collapse:collapse;
+    background-color: transparent; /* Nền trong suốt để thấy nền card */
+}
+th, td {
+    padding:12px 15px; text-align:left; vertical-align:middle;
+    border-bottom:1px solid #e7eaf3; /* Viền nhạt */
+    color:#343f56; font-size:0.9rem;
+}
+th {
+    background-color:#f8f9fc; /* Nền header table */
+    font-weight: 600; color:#1a2b48;
+    font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px;
+    border-bottom-width:1px; border-bottom-color:#dee2e6; /* Viền dưới header đậm hơn chút */
+}
+tbody tr:hover td { background-color:#f1f3f7; }
+
+td.actions { min-width:190px; }
+.actions a, .actions button {
+    margin-right:8px; margin-bottom:5px; padding:7px 10px; font-size:0.85rem; border-radius:6px;
+}
+.download-link { background-color:#d1e7dd; border-color:#badbcc; color:#0f5132; }
+.download-link:hover { background-color:#badbcc; border-color:#a8d5bb; color:#0b3d25; }
+.delete-button { background-color:#f8d7da; border-color:#f5c2c7; color:#842029; }
+.delete-button:hover { background-color:#f5c2c7; border-color:#f1b0b7; color:#58151c; }
+
+.no-submissions { text-align:center; padding:25px; font-style:italic; color:#6c757d; }
+.no-submissions i { margin-right:8px; }
+
+/* --- Lookup Results (Trang index) --- */
+#ket-qua-tra-cuu { margin-top:25px; padding:20px; background-color:#f8f9fc; border-radius:10px; border:1px solid #e7eaf3; }
+#ket-qua-tra-cuu h4 { color:#1a2b48; margin-bottom:15px; font-size:1.1rem; }
+#ket-qua-tra-cuu h4 i { color:#2563eb; }
+#ket-qua-tra-cuu ul { list-style-type:none; padding-left:0; }
+#ket-qua-tra-cuu li { padding:10px 5px; border-bottom:1px dashed #dfe4f0; color:#455468; display:flex; align-items:center; gap:10px; font-size:0.9rem;}
+#ket-qua-tra-cuu li:last-child { border-bottom:none; }
+#ket-qua-tra-cuu li i { color:#2563eb; font-size:1.05rem; }
+#ket-qua-tra-cuu p.ket-qua-message { color:#6c757d; font-style:italic; padding:10px 0; }
+#ket-qua-tra-cuu p.ket-qua-message i { color:#6c757d; }
+
+/* --- Site Footer --- */
+.site-footer {
+    width: 100%;
+    padding: 20px 15px;
+    text-align: center;
+    background-color: #fff; /* Nền trắng cho footer */
+    color: #6c757d; /* Chữ xám */
+    font-size: 0.85rem;
+    margin-top: auto; /* Đẩy footer xuống cuối */
+    border-top: 1px solid #e7eaf3; /* Viền trên footer */
+}
+.site-footer p { margin-bottom: 0; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body { padding: 0; } /* Body full width trên mobile */
+    .page-wrapper { padding: 15px 10px 30px 10px; max-width: 100%;}
+    .header-logo { max-width: 90px; }
+    .header-title h1 { font-size:2rem; } .header-title h2 { font-size:1.3rem; } .header-title h3 { font-size:1.1rem; }
+    .container { gap: 20px;}
+    .card-ui, .login-container-ultrasimple { padding:25px 20px; border-radius:10px; }
+    .card-ui h2, .card-ui h3, .login-container-ultrasimple h3 { font-size:1.3rem; }
+
+    .admin-page-container.card-ui { margin: 20px 10px; padding:0; }
+    .header.admin-header { padding:15px 20px; border-radius:10px 10px 0 0;}
+    .admin-controls { padding: 15px 20px 0 20px; }
+    .table-responsive-wrapper { padding: 0 15px 15px 15px; }
+    th, td { padding: 10px; font-size: 0.85rem; }
+}

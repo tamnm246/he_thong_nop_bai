@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Đăng Nhập Hệ Thống</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-page-ultrasimple-body">
+
+    <div class="login-container-ultrasimple">
+        <h3><i class="fas fa-sign-in-alt"></i> ĐĂNG NHẬP</h3>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                     {% if category == 'login_error' %}
+                        <div class="flash-ultrasimple error">
+                           <i class="fas fa-exclamation-circle"></i> {{ message }}
+                        </div>
+                     {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form id="login-form-ultrasimple" action="{{ url_for('login') }}" method="POST">
+            <div class="input-group-ultrasimple">
+                <label for="username">User đăng nhập:</label>
+                <input type="text" id="username" name="username" required value="{{ username if username else '' }}" placeholder="Nhập tài khoản">
+            </div>
+
+            <div class="input-group-ultrasimple">
+                <label for="password">Mật khẩu:</label>
+                <input type="password" id="password" name="password" required placeholder="Nhập mật khẩu">
+            </div>
+
+            <button type="submit" class="button-login-ultrasimple">
+                <i class="fas fa-arrow-right"></i> Đăng nhập
+            </button>
+        </form>
+         <div class="back-link-ultrasimple">
+            <a href="{{ url_for('student_index') }}"><i class="fas fa-arrow-left"></i> Quay lại trang chủ</a>
+        </div>
+    </div>
+
+</body>
+</html>

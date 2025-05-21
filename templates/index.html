@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Nộp Sản Phẩm - GD Kinh Tế & Pháp Luật</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="main-header">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo Trang Web" class="header-logo">
+            <div class="header-title">
+                <h1>HỆ THỐNG</h1>
+                <h2>NỘP SẢN PHẨM HỌC TẬP TRỰC TUYẾN</h2>
+                <h3>MÔN GIÁO DỤC KINH TẾ VÀ PHÁP LUẬT</h3>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">
+                        {% if category == 'success' %}<i class="fas fa-check-circle"></i>
+                        {% elif category == 'error' or category == 'login_error' %}<i class="fas fa-exclamation-triangle"></i>
+                        {% elif category == 'info' %}<i class="fas fa-info-circle"></i>
+                        {% elif category == 'warning' %}<i class="fas fa-exclamation-circle"></i>
+                        {% else %}<i class="fas fa-bell"></i> {% endif %}
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <main class="container">
+            <section class="form-section card-ui" id="nop-bai">
+                <h3><i class="fas fa-upload"></i> CỔNG NỘP BÀI</h3>
+                <form id="form-nop-bai" action="{{ url_for('submit_assignment') }}" method="POST" enctype="multipart/form-data">
+                    <label for="ho-ten-nop">Họ và Tên</label>
+                    <input type="text" id="ho-ten-nop" name="ho-ten-nop" placeholder="Nhập họ và tên đầy đủ" required>
+
+                    <label for="lop-nop">Lớp</label>
+                    <input type="text" id="lop-nop" name="lop-nop" placeholder="VD: 10A1, 11B2, 12C3" required>
+
+                    <label for="file-san-pham">Tải Sản Phẩm Lên</label>
+                    <input type="file" id="file-san-pham" name="file-san-pham" required>
+
+                    <button type="submit" class="button-primary-action"><i class="fas fa-paper-plane"></i> Nộp Bài</button>
+                </form>
+            </section>
+
+            <section class="form-section card-ui" id="tra-cuu">
+                <h3><i class="fas fa-search"></i> TRA CỨU BÀI ĐÃ NỘP</h3>
+                <form id="form-tra-cuu" action="{{ url_for('lookup_submission') }}" method="POST">
+                    <label for="ho-ten-tra-cuu">Họ và Tên</label>
+                    <input type="text" id="ho-ten-tra-cuu" name="ho-ten-tra-cuu" placeholder="Nhập họ và tên để tra cứu" required value="{{ prev_ho_ten if prev_ho_ten else '' }}">
+
+                    <label for="lop-tra-cuu">Lớp</label>
+                    <select id="lop-tra-cuu" name="lop-tra-cuu" required>
+                        <option value="">--- Chọn lớp ---</option>
+                        {% set common_classes = ["10A1", "10A2", "10A3", "10A4", "10A5", "10A6","10A7","10A8","10A9","10A10",
+                                                 "11B1", "11B2", "11B3", "11B4", "11B5", "11B6","11B7","11B8","11B9","11B10",
+                                                 "12C1", "12C2", "12C3", "12C4", "12C5", "12C6","12C7","12C8","12C9","12C10"] %}
+                        {% for cls in common_classes %}
+                            <option value="{{ cls }}" {% if prev_lop == cls %}selected{% endif %}>{{ cls }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit" class="button-green"><i class="fas fa-search-plus"></i> Tra Cứu</button>
+                </form>
+                <div id="ket-qua-tra-cuu">
+                    {% if lookup_results is defined and lookup_results %}
+                        <h4><i class="fas fa-clipboard-list"></i> Kết quả tra cứu:</h4>
+                        <ul>
+                        {% for result in lookup_results %}
+                            <li>
+                                <i class="fas fa-file-alt"></i>
+                                {{ result.original_filename }} (Nộp lúc:
+                                {% if result.upload_timestamp is string %}
+                                    {{ result.upload_timestamp.split('.')[0] }}
+                                {% else %}
+                                    {{ result.upload_timestamp.strftime('%d-%m-%Y %H:%M:%S') }}
+                                {% endif %})
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% elif lookup_results is defined and not lookup_results and request.method == "POST" and prev_ho_ten and prev_lop %}
+                        <p class="ket-qua-message"><i class="fas fa-folder-open"></i><em>Không tìm thấy bài nộp nào khớp với thông tin của bạn.</em></p>
+                    {% endif %}
+                </div>
+            </section>
+        </main>
+
+        <div class="login-link-container">
+            <a href="{{ url_for('login') }}" class="login-link-button"><i class="fas fa-user-shield"></i> Đăng nhập Giáo viên</a>
+        </div>
+    </div> <footer class="site-footer">
+        <p>Bản quyền thuộc về Nguyễn Minh Tâm - TTSPLienVietKonTum</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Bài Nộp - Giáo Viên</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-wrapper">
+        <main class="admin-page-container card-ui"> <header class="header admin-header"> <h2><i class="fas fa-user-cog"></i> TRANG QUẢN LÝ BÀI NỘP</h2>
+                <div class="admin-header-info">
+                    {% if teacher_name %}
+                    <span class="welcome-message">Chào mừng, Giáo viên {{ teacher_name }}!</span>
+                    {% endif %}
+                    <a href="{{ url_for('logout') }}" class="logout-button"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</a>
+                </div>
+            </header>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages-admin" style="padding: 0 25px;"> {% for category, message in messages %}
+                        <div class="flash {{ category }}">
+                            {% if category == 'success' %}<i class="fas fa-check-circle"></i>
+                            {% elif category == 'error' %}<i class="fas fa-exclamation-triangle"></i>
+                            {% elif category == 'info' %}<i class="fas fa-info-circle"></i>
+                            {% elif category == 'warning' %}<i class="fas fa-exclamation-circle"></i>
+                            {% else %}<i class="fas fa-bell"></i>
+                            {% endif %}
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div id="danh-sach-bai-nop">
+                <div class="admin-controls">
+                    <h3><i class="fas fa-list-ul"></i> Danh sách học sinh đã nộp bài</h3>
+                    <a href="{{ url_for('export_excel') }}" class="export-excel-button"><i class="fas fa-file-excel"></i> Tải Danh sách (.xlsx)</a>
+                </div>
+                <div class="table-responsive-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Họ và Tên</th>
+                                <th>Lớp</th>
+                                <th>Tên File Gốc</th>
+                                <th>Thời Gian Nộp</th>
+                                <th class="actions-header">Hành động</th> </tr>
+                        </thead>
+                        <tbody id="submission-table-body">
+                            {% if submissions %}
+                                {% for submission in submissions %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ submission.student_name }}</td>
+                                    <td>{{ submission.student_class }}</td>
+                                    <td>{{ submission.original_filename }}</td>
+                                    <td>{{ submission.formatted_upload_timestamp }}</td>
+                                    <td class="actions">
+                                        <a href="{{ url_for('download_file', submission_id=submission.id) }}" class="download-link button"><i class="fas fa-download"></i> Tải về</a>
+                                        <form action="{{ url_for('delete_submission', submission_id=submission.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa bài nộp: \'{{ submission.original_filename }}\' của học sinh {{ submission.student_name }} - Lớp {{ submission.student_class }}? Thao tác này không thể hoàn tác!');">
+                                            <button type="submit" class="delete-button button"><i class="fas fa-trash-alt"></i> Xóa</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="no-submissions"><i class="fas fa-info-circle"></i> Hiện chưa có học sinh nào nộp bài.</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div> <footer class="site-footer">
+        <p>Bản quyền thuộc về Nguyễn Minh Tâm - TTSPLienVietKonTum</p>
+    </footer>
+</body>
+</html>
